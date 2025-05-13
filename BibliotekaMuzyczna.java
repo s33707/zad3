@@ -1,52 +1,69 @@
-import java.util.ArrayList;
-public class BibliotekaMuzyczna {
-    public static void main(String[] args){
-
+class BibliotekaMuzyczna {
+        private String nazwaBiblioteki;
+        private String wlasciciel;
         private ArrayList<String> utwory;
         private ArrayList<Playlista> playlisty;
+    
+    public BibliotekaMuzyczna(String nazwaBiblioteki, String wlasciciel) {
+        this.nazwaBibilioteki = nazwaBiblioteki;
+        this.wlasciciel = wlasciciel;
+        this.utwory = new ArrayList<>();
+        this.playlisty = new ArrayList<>();
     }
-    public BibliotekaMuzyczna(){
-        utwory = new ArrayList<String>();
-        playlisty = new ArrayList<Playlista>();
-    }
-    public void dodajUtwor(String tytul) {
+    public void dodajUtwor(String utwor) {
+        if (!utwory.contains(utwor)) {
         utwory.add(tytul);
-        System.out.println("dodano utwór: " + tytul);
+        System.out.println("dodano utwór: " + utwor);
+    } else {
+            System.out.println("utwór " + utwor + "juz istnieje w bibliotece ");
+        }
+}
+
+    public void usunUtwor(String utwor){
+        if (utwory.remove(utwor)) {
+            System.ou.println("Usuniety utwór: " + utwor " z biblioteki.");
+            for (Playllista playlista : playlisty) {
+                playlista.usunUtwor(utwor);
+            } else {
+                System.out.println("Nie znaleziono utworu " + tytul);
+        }
     }
 
-    public void usunUtwor(int indeks){
-        if (indeks >= 0 && indeks < utwory.size()) {
-            String usuniety = utwory.get(indeks);
-            utwory.remove(indeks);
-            System.out.println("usunięto utwór: " + tytul);
-
-            for (Playlista playlista : playlisty) {
-                playlista.usunUtwor(tytul);
-            }
+      public void wyswietlUtwory() {
+        System.out.println("wszystkie utwory" + utwory.size());
+        if (utwory.isEmpty()) {
+            System.out.println("biblioteka jest pusta");
         } else {
-            System.out.println("nie znaleziono utworu" + tytul);
+        for (int i = 0; i < utwory.size(); i++) {
+            System.out.println((i +1) + utwory.get(i));
         }
     }
+          System.out.println();
+      }
+
+        public void wyszukajUtwory(String fraza) {
+            System.out.println("Utwory zawierające frazę " + fraza + " :"
+            boolean znaleziono = false;
+            for(String utwor ; utwory) {
+                if (utwor.toLowerCase().contains(fraza.toLowerCase)) {
+                    System.out.println(" - " + utwor);
+                    znaleziono = true;
+            }
+        }
+            if (!znaleziono){
+                System.out.println(" Nie znaleziono utworów z tą frazą");
+            }
+            System.out.println():
+        }
+    
     public void utworzPlayliste(String nazwa) {
-        Playlista nowa = new Playlista(nazwa);
-        playlisty.add(nowa);
-        System.out.println("utworzono playliste: " + nazwa);
+        if (znajdzPlayliste(nazwa) == null) {
+            playlisty.add(new Playlista(nazwa));
+            System.out.println("Playlista o nazwie " + nazwa "już istnieje");
+        }
     }
 
-    public void dodajUtworyDoPlaylisty(String tytulUtworu, String nazwaPlaylisty) {
-        if (utwory.contains(tytulUtworu)) {
-            dodajUtwor(tytulUtworu);
-        }
-
-        Playlista playlista = znajdzPlayliste(nazwaPlaylisty);
-        if (playlista == null) {
-            utworzPlayliste(nazwaPlaylisty);
-            playlista = znajdzPlayliste(nazwaPlaylisty);
-        }
-        playlista.dodajUtwor(tytulUtworu);
-        System.out.println(" dodano " + tytulUtworu + "do playlisty" + nazwaPlaylisty);
-    }
-    private Playlista znajdzPlayliste(String nazwa) {
+        private Playlista znajdzPlayliste(String nazwa) {
         for (Playlista playlista ; playlisty) {
             if (playlista.getNazwa().equals(nazwa)) {
                 return playlista;
@@ -54,51 +71,41 @@ public class BibliotekaMuzyczna {
         }
         return null;
     }
-
-    public ArrayList<String> wyszukajUtwory(String fraza) {
-        ArrayList<String> wyniki = new ArrayList<String>();
-
-        for (String utwor ; utwory) {
-            if (utwor.toLowerCase().contains(fraza.toLowerCase)) {
-                wyniki.add(utwor);
-            }
+    
+    public void dodajUtworyDoPlaylisty(String tytulUtworu, String nazwaPlaylisty) {
+        Playlisty playlista = znajdzPlayliste(nazwaPlaylisty);
+        if (playlista != null && utwory.contains(utwor)) {
+            playlista.dodajUtwor(utwor);
+            System.out.println("Dodano utwór "+ utwor + "do playlisty " + nazwaPlaylisty);
+        } else if (playlista == null) {
+            System.out.println("Nie znaleziono playlisty o nazwie " + nazwaPlaylisty + " w bibliotece";
+         } else {
+            System.out.println("Nie znaleziono utworu " + utwor + " w bibliotece");
         }
     }
-    public void wyswietlWszystkieUtwory() {
-        System.out.println("wszystkie utwory" + utwory.size());
 
-        if (utwory.isEmpty()) {
-            System.out.println("biblioteka jest pusta");
-            return;
-        }
-        for (int i = 0; i < utwory.size(); i++) {
-            System.out.println((i +1) + utwory.get(i));
-        }
-    }
     public void wyswietlWszystkiePlaylisty() {
-        System.out.println("wszystkie playlisty" + playlisty.size());
-
+        System.out.println("wszystkie playlisty");
         if (playlisty.isEmpty()) {
             System.out.println("brak playlist");
-            return;
+        } else {
+            for (Playlista playlista : playlisty) {
+                System.out.println(" - " + playlista.getNazwa());
+            }
         }
-
-        for (int i = 0; i < playlisty.size(); i++) {
-            Playlista playlista = playlisty.get(i);
-            System.out.println((i + 1) + playlista.getNazwa() + playlista.getLiczbaUtworow() + "utworow");
-        }
+        System.out.println();
     }
 
-    public void wyswietlPlayliste(String nazwa) {
-        Playlista playlista = znajdzPlayliste(nazwa);
-
-        if (playlista) != null) {
-    System.out.println(zawartosc playlisty + nazwa);
-    playlista.wyswietlUtworzy();
-        }else{
-    System.out.println("nie znaleziono playlisty " + nazwa);
+    public void wyswietlPlayliste(String nazwaPlaylisty) {
+        Playlista playlista = znajdzPlayliste(nazwaPlaylisty);
+        if (playlista != null) {
+            playlista.wyswietlPlayliste();
+        } else {
+            System.out.println("nie znaleziono playlisty " + nazwaPlaylisty);
         }
     }
+    System.out.println();
+}
 
     public int getLiczbaUtworow() {
         return utwory.size();
@@ -106,42 +113,5 @@ public class BibliotekaMuzyczna {
 
     public int getLiczbaPlaylist() {
         return playlisty.size();
-    }
-
-    class Playlista {
-        private String nazwa;
-        private ArrayList<String> utwory;
-
-        public Playlista(String nazwa) {
-            this.nazwa = nazwa;
-            this.utwory = new ArrayList<String>();
-        }
-        public String getNazwa() {
-            return nazwa;
-        }
-        public void dodajUtwor(String utwor) {
-            if (utwory.contains(utwor)) {
-                utwory.add(utwor);
-            }
-        }
-
-        public void usunUtwor(String utwor) {
-            utwory.remove(utwor);
-        }
-
-        public int getLiczbaUtworow() {
-            return utwory.size();
-        }
-
-        public void wyswietlUtwory() {
-            if (utwory.isEmpty()) {
-                System.out.println("playlista jest pusta");
-                return;
-            }
-
-            for (int i = 0; i <utwory.size(); i++) {
-                System.out.println((i +1) + utwory.get(i));
-            }
-        }
     }
 }
