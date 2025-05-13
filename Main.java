@@ -1,7 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        BibliotekaMuzyczna mojaBiblioteka = new BibliotekaMuzyczna();
-        mojaBiblioteka.dodajUtwor("Queen - Bohemian Rhapsody");mojaBiblioteka.dodajUtwor("Pink Floyd - Comfortably Numb");
+        BibliotekaMuzyczna mojaBiblioteka = new BibliotekaMuzyczna("Kolekcja Rockowa", "Jan Kowalski");
+        mojaBiblioteka.dodajUtwor("Led Zeppelin - Stairway to Heaven");
+        mojaBiblioteka.dodajUtwor("Queen - Bohemian Rhapsody");
+        mojaBiblioteka.dodajUtwor("Pink Floyd - Comfortably Numb");
         mojaBiblioteka.dodajUtwor("AC/DC - Back in Black");
         mojaBiblioteka.dodajUtwor("Metallica - Nothing Else Matters");
 
